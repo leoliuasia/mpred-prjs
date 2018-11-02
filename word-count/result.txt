@@ -1,0 +1,204 @@
+hadoop fs -chmod a+w /leo
+
+hadoop fs -put $(pwd)/src/main/java/com/leo/WordCount.java /leo/mrinput
+
+hadoop jar $(pwd)/target/word-count-1.0-SNAPSHOT.jar com.leo.WordCount /leo/mrinput /leo/mroutput
+
+== execution process
+
+[root@hdp-1 word-count]# hadoop jar $(pwd)/target/word-count-1.0-SNAPSHOT.jar com.leo.WordCount /leo/mrinput /leo/mroutput
+18/11/02 03:09:46 INFO client.RMProxy: Connecting to ResourceManager at hdp-1.us-east1-b.c.fluted-bee-221201.internal/10.142.0.2:8050
+18/11/02 03:09:46 INFO client.AHSProxy: Connecting to Application History server at hdp-1.us-east1-b.c.fluted-bee-221201.internal/10.142.0.2:10200
+18/11/02 03:09:46 WARN mapreduce.JobResourceUploader: Hadoop command-line option parsing not performed. Implement the Tool interface and execute your application with ToolRunner to remedy this.
+18/11/02 03:09:46 INFO mapreduce.JobResourceUploader: Disabling Erasure Coding for path: /user/root/.staging/job_1541038218181_0001
+18/11/02 03:09:47 INFO input.FileInputFormat: Total input files to process : 1
+18/11/02 03:09:47 INFO mapreduce.JobSubmitter: number of splits:1
+18/11/02 03:09:47 INFO mapreduce.JobSubmitter: Submitting tokens for job: job_1541038218181_0001
+18/11/02 03:09:47 INFO mapreduce.JobSubmitter: Executing with tokens: []
+18/11/02 03:09:47 INFO conf.Configuration: found resource resource-types.xml at file:/etc/hadoop/3.0.1.0-187/0/resource-types.xml
+18/11/02 03:09:47 INFO impl.YarnClientImpl: Submitted application application_1541038218181_0001
+18/11/02 03:09:47 INFO mapreduce.Job: The url to track the job: http://hdp-1.us-east1-b.c.fluted-bee-221201.internal:8088/proxy/application_1541038218181_0001/
+18/11/02 03:09:47 INFO mapreduce.Job: Running job: job_1541038218181_0001
+18/11/02 03:09:55 INFO mapreduce.Job: Job job_1541038218181_0001 running in uber mode : false
+18/11/02 03:09:55 INFO mapreduce.Job:  map 0% reduce 0%
+18/11/02 03:10:01 INFO mapreduce.Job:  map 100% reduce 0%
+18/11/02 03:10:06 INFO mapreduce.Job:  map 100% reduce 100%
+18/11/02 03:10:06 INFO mapreduce.Job: Job job_1541038218181_0001 completed successfully
+18/11/02 03:10:06 INFO mapreduce.Job: Counters: 53
+        File System Counters
+                FILE: Number of bytes read=2177
+                FILE: Number of bytes written=466943
+                FILE: Number of read operations=0
+                FILE: Number of large read operations=0
+                FILE: Number of write operations=0
+                HDFS: Number of bytes read=2149
+                HDFS: Number of bytes written=1768
+                HDFS: Number of read operations=8
+                HDFS: Number of large read operations=0
+                HDFS: Number of write operations=2
+        Job Counters 
+                Launched map tasks=1
+                Launched reduce tasks=1
+                Data-local map tasks=1
+                Total time spent by all maps in occupied slots (ms)=56944
+                Total time spent by all reduces in occupied slots (ms)=85760
+                Total time spent by all map tasks (ms)=3559
+                Total time spent by all reduce tasks (ms)=2680
+                Total vcore-milliseconds taken by all map tasks=3559
+                Total vcore-milliseconds taken by all reduce tasks=2680
+                Total megabyte-milliseconds taken by all map tasks=58310656
+                Total megabyte-milliseconds taken by all reduce tasks=87818240
+        Map-Reduce Framework
+                Map input records=56
+                Map output records=167
+                Map output bytes=2600
+                Map output materialized bytes=2177
+                Input split bytes=134
+                Combine input records=167
+                Combine output records=101
+                Reduce input groups=101
+                Reduce shuffle bytes=2177
+                Reduce input records=101
+                Reduce output records=101
+                Spilled Records=202
+                Shuffled Maps =1
+                Failed Shuffles=0
+                Merged Map outputs=1
+                GC time elapsed (ms)=150
+                CPU time spent (ms)=2980
+                Physical memory (bytes) snapshot=2738520064
+                Virtual memory (bytes) snapshot=46696923136
+                Total committed heap usage (bytes)=2766667776
+                Peak Map Physical memory (bytes)=2429005824
+                Peak Map Virtual memory (bytes)=16207773696
+                Peak Reduce Physical memory (bytes)=309514240
+                Peak Reduce Virtual memory (bytes)=30489149440
+        Shuffle Errors
+                BAD_ID=0
+                CONNECTION=0
+                IO_ERROR=0
+                WRONG_LENGTH=0
+                WRONG_MAP=0
+                WRONG_REDUCE=0
+        File Input Format Counters 
+                Bytes Read=2015
+        File Output Format Counters 
+                Bytes Written=1768
+[root@hdp-1 word-count]# 
+
+                
+== result:
+
+[root@hdp-1 mpred-prjs]# hdfs dfs -ls /leo/mroutput
+Found 2 items
+-rw-r--r--   3 root hdfs          0 2018-11-02 03:10 /leo/mroutput/_SUCCESS
+-rw-r--r--   3 root hdfs       1768 2018-11-02 03:10 /leo/mroutput/part-r-00000
+
+
+[root@hdp-1 mpred-prjs]# hdfs dfs -cat /leo/mroutput/part-r-00000
+"word   1
+(IntWritable    1
+(tokenizer.hasMoreTokens())     1
+)       1
++=      1
+0       1
+0;      1
+1);     1
+:       2
+=       7
+?       1
+ClassNotFoundException  1
+Configuration   1
+Configuration();        1
+Context 2
+FileInputFormat.addInputPath(job,       1
+FileOutputFormat.setOutputPath(job,     1
+IOException,    3
+IntSumReducer   1
+IntWritable     2
+IntWritable();  1
+IntWritable(1); 1
+IntWritable,    1
+IntWritable>    2
+InterruptedException    2
+InterruptedException,   1
+Iterable<IntWritable>   1
+Job     1
+Job.getInstance(conf,   1
+Mapper<Object,  1
+Path(args[0])); 1
+Path(args[1])); 1
+Reducer<Text,   1
+StringTokenizer 1
+StringTokenizer(value.toString());      1
+String[]        1
+System.exit(job.waitForCompletion(true) 1
+Text    2
+Text(); 1
+Text,   3
+TokenizerMapper 1
+WordCount       1
+args    1
+class   3
+com.leo;        1
+conf    1
+context)        2
+context.write(key,      1
+context.write(word,     1
+count");        1
+extends 2
+final   1
+for     1
+import  11
+int     1
+java.io.IOException;    1
+java.util.StringTokenizer;      1
+job     1
+job.setCombinerClass(IntSumReducer.class);      1
+job.setJarByClass(WordCount.class);     1
+job.setMapperClass(TokenizerMapper.class);      1
+job.setOutputKeyClass(Text.class);      1
+job.setOutputValueClass(IntWritable.class);     1
+job.setReducerClass(IntSumReducer.class);       1
+key,    2
+main(   1
+map(Object      1
+new     7
+one     1
+one);   1
+org.apache.hadoop.conf.Configuration;   1
+org.apache.hadoop.fs.Path;      1
+org.apache.hadoop.io.IntWritable;       1
+org.apache.hadoop.io.Text;      1
+org.apache.hadoop.mapreduce.Job;        1
+org.apache.hadoop.mapreduce.Mapper;     1
+org.apache.hadoop.mapreduce.Reducer;    1
+org.apache.hadoop.mapreduce.lib.input.FileInputFormat;  1
+org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;        1
+package 1
+private 3
+public  6
+reduce(Text     1
+result  1
+result);        1
+result.set(sum);        1
+static  4
+sum     2
+throws  3
+tokenizer       1
+val     1
+val.get();      1
+value,  1
+values) 1
+values, 1
+void    3
+while   1
+word    1
+word.set(tokenizer.nextToken());        1
+{       8
+}       8
+
+root@hdp-1 mpred-prjs]# hdfs dfs -cat /leo/mroutput/_SUCCESS
+[root@hdp-1 mpred-prjs]# 
+
+
